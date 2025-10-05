@@ -39,11 +39,3 @@ This project is built with **Django** and **Django REST Framework** to provide a
 - **Authentication:** JWT or Django’s built-in auth system  
 - **Version Control:** Git & GitHub  
 
----
-
-## ⚙️ Installation & Setup
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/your-username/inventory-management-system.git
-cd inventory-management-system
