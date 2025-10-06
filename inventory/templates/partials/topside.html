@@ -15,7 +15,10 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-4">
-            <a class="text-decoration-none text-dark">
+            <a
+              class="text-decoration-none text-dark"
+              href="{% url 'dashboard-staff' %}"
+            >
               <div class="card my-card shadow">
                 <div class="card-body text-center">
                   <h4>Staff <i class="fas fa-users"></i></h4>
@@ -27,7 +30,7 @@
           <div class="col-md-4">
             <a
               class="text-decoration-none text-dark"
-              href="{% url 'dashboard-staff'%}"
+              href="{% url 'dashboard-product' %}"
             >
               <div class="card my-card shadow">
                 <div class="card-body text-center">
@@ -38,7 +41,10 @@
             </a>
           </div>
           <div class="col-md-4">
-            <a class="text-decoration-none text-dark">
+            <a
+              class="text-decoration-none text-dark"
+              href="{% url 'dashboard-order' %}"
+            >
               <div class="card my-card shadow">
                 <div class="card-body text-center">
                   <h4>Orders <i class="fas fa-shipping-fast"></i></h4>
