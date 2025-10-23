@@ -9,6 +9,9 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
+    <!-- CSRF Token for AJAX requests -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -37,6 +40,10 @@
     {% include 'partials/nav.html' %}
 
     <div class="container">{% block content %} {% endblock %}</div>
+
+    <!-- Hidden CSRF token for JavaScript access -->
+    <input type="hidden" id="csrfToken" value="{{ csrf_token }}">
+
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -48,6 +55,66 @@
       crossorigin="anonymous"
     ></script>
 
+    <!-- CSRF Token Utility Script -->
+    <script>
+      // Function to get CSRF token from cookie
+      function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              const cookies = document.cookie.split(';');
+              for (let i = 0; i < cookies.length; i++) {
+                  const cookie = cookies[i].trim();
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+
+      // Get CSRF token from hidden input or cookie
+      function getCSRFToken() {
+          const hiddenToken = document.getElementById('csrfToken');
+          if (hiddenToken && hiddenToken.value) {
+              return hiddenToken.value;
+          }
+          return getCookie('csrftoken');
+      }
+
+      // Set up AJAX to include CSRF token by default
+      const csrftoken = getCSRFToken();
+
+      // For jQuery AJAX requests
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+      // For fetch API
+      const originalFetch = window.fetch;
+      window.fetch = function(...args) {
+          const [url, options = {}] = args;
+          
+          // Only add CSRF token for same-origin POST, PUT, PATCH, DELETE requests
+          if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(options.method || 'GET') && 
+              !options.credentials || options.credentials === 'same-origin') {
+              
+              options.headers = {
+                  ...options.headers,
+                  'X-CSRFToken': csrftoken
+              };
+          }
+          
+          return originalFetch(url, options);
+      };
+    </script>
+
+    <!-- Additional custom scripts block -->
+    {% block extra_scripts %}{% endblock %}
     
   </body>
 </html>
