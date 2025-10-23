@@ -1,2 +1,202 @@
-{% extends 'partials/base.html' %} {% block title %} Home Page {% endblock %}
-{%block content%} {% include 'partials/topside.html' %}{% endblock %}
+{% extends 'partials/base.html' %} 
+{% block title %}Dashboard{% endblock %}
+
+{% block content %} 
+{% include 'partials/topside.html' %}
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <h1>Inventory Dashboard</h1>
+        <p class="text-muted">Welcome to your inventory management system</p>
+    </div>
+</div>
+
+<!-- Chart Row 1 -->
+<div class="row mt-4">
+    <!-- Chart 1: 0.02 / 13:43 (Line Chart) -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Performance Metrics</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="performanceChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 2: 1.0, 0.9, 0.8... (Bar Chart) -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Quality Scores</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="qualityChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart Row 2 -->
+<div class="row mt-4">
+    <!-- Chart 3: 2.0, 18, 16... (Line Chart) -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Inventory Levels</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="inventoryChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 4: Products (Pie Chart) -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Product Distribution</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="productChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Chart 1: Performance Metrics (0.02 / 13:43)
+const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+const performanceChart = new Chart(performanceCtx, {
+    type: 'line',
+    data: {
+        labels: ['Time 1', 'Time 2', 'Time 3', 'Time 4', 'Time 5'],
+        datasets: [{
+            label: 'Metric A',
+            data: [0.02, 0.05, 0.03, 0.07, 0.04],
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }, {
+            label: 'Metric B',
+            data: [13.43, 14.20, 12.85, 13.90, 14.10],
+            borderColor: 'rgb(255, 99, 132)',
+            tension: 0.1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Performance Over Time'
+            }
+        }
+    }
+});
+
+// Chart 2: Quality Scores (1.0, 0.9, 0.8...)
+const qualityCtx = document.getElementById('qualityChart').getContext('2d');
+const qualityChart = new Chart(qualityCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6'],
+        datasets: [{
+            label: 'Quality Score',
+            data: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5],
+            backgroundColor: 'rgba(54, 162, 235, 0.8)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 1.2
+            }
+        }
+    }
+});
+
+// Chart 3: Inventory Levels (2.0, 18, 16...)
+const inventoryCtx = document.getElementById('inventoryChart').getContext('2d');
+const inventoryChart = new Chart(inventoryCtx, {
+    type: 'line',
+    data: {
+        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+        datasets: [{
+            label: 'Inventory Level',
+            data: [2.0, 18, 16, 14, 12, 10],
+            borderColor: 'rgb(153, 102, 255)',
+            backgroundColor: 'rgba(153, 102, 255, 0.1)',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Inventory Trend'
+            }
+        }
+    }
+});
+
+// Chart 4: Product Distribution
+const productCtx = document.getElementById('productChart').getContext('2d');
+const productChart = new Chart(productCtx, {
+    type: 'pie',
+    data: {
+        labels: ['Electronics', 'Clothing', 'Food', 'Books', 'Other'],
+        datasets: [{
+            data: [35, 25, 20, 15, 5],
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(153, 102, 255)'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom',
+            },
+            title: {
+                display: true,
+                text: 'Product Categories'
+            }
+        }
+    }
+});
+</script>
+
+<style>
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e3e6f0;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.card-title {
+    margin-bottom: 0;
+    color: #5a5c69;
+    font-weight: 600;
+}
+</style>
+
+{% endblock %}

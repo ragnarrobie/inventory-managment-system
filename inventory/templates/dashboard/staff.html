@@ -1,49 +1,106 @@
-{% extends 'partials/base.html' %} {%block title%}Product Page{%endblock%}
-{%block content%} {% include 'partials/topside.html' %}
+{% extends 'partials/base.html' %}
+{%block title%}Staff Page{%endblock%}
+
+{%block content%} 
+{% include 'partials/topside.html' %}
+
 <div class="row my-4">
   <div class="col-md-4">
-    {% if messages %} {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-    {% endfor %} {% endif %}
+    {% if messages %} 
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %} 
+    {% endif %}
+    
     <div class="card card-body">
-      <h5>Add New Products</h5>
+      <h5>Add New Staff Member</h5>
       <hr />
       <form method="POST">
-        <input class="btn btn-success btn-block" type="submit" value="Add" />
+        {% csrf_token %}
+        <!-- Add your form fields here -->
+        <div class="form-group">
+          <label for="first_name">First Name</label>
+          <input type="text" class="form-control" id="first_name" name="first_name" required>
+        </div>
+        <div class="form-group">
+          <label for="last_name">Last Name</label>
+          <input type="text" class="form-control" id="last_name" name="last_name" required>
+        </div>
+        <div class="form-group">
+          <label for="position">Position</label>
+          <input type="text" class="form-control" id="position" name="position" required>
+        </div>
+        <button class="btn btn-success btn-block" type="submit">
+          <i class="fas fa-plus"></i> Add Staff
+        </button>
       </form>
     </div>
   </div>
+  
   <div class="col-md-8">
     <table class="table bg-white">
       <thead class="bg-info text-white">
         <tr>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Position</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
-        {% for product in product %}
+        {% for staff_member in staff %}
         <tr>
-          <td>{{ product.First }}</td>
-          <td>{{ product.Last }}</td>
-          <td>{{ product.Handle }}</td>
+          <td>{{ staff_member.first_name }}</td>
+          <td>{{ staff_member.last_name }}</td>
+          <td>{{ staff_member.position }}</td>
           <td>
-            <a
-              class="btn btn-info btn-sm mr-2"
-              href="{% url 'dashboard-products-edit' product.id %}"
-              >Edit</a
-            >
-            <a
-              class="btn btn-danger btn-sm ml-2"
-              href="{% url 'dashboard-products-delete' product.id %}"
-              >Delete</a
-            >
+            <!-- Green Add Button (if you want to duplicate/add similar) -->
+            <a class="btn btn-success btn-sm mr-2" href="#" title="Add Similar">
+              <i class="fas fa-copy"></i>
+            </a>
+            <!-- Red Delete Button -->
+            <a class="btn btn-danger btn-sm ml-2" href="{% url 'dashboard-staff-delete' staff_member.id %}" title="Delete">
+              <i class="fas fa-trash"></i>
+            </a>
           </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4" class="text-center">No staff members found.</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
+
+<style>
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.table th {
+  border-top: none;
+}
+
+.card-body {
+  padding: 20px;
+}
+</style>
 {%endblock%}

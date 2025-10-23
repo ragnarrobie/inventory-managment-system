@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.db import IntegrityError
 from .forms import CreateUserForm
+from django.contrib.auth import logout
+
 
 def register(request):
     if request.method == 'POST':
@@ -20,3 +22,6 @@ def register(request):
         form = CreateUserForm()
 
     return render(request, 'user/register.html', {'form': form})
+def user_logout(request):
+    logout(request)
+    return redirect('user-login')
