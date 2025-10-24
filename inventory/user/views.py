@@ -25,3 +25,7 @@ def register(request):
 def user_logout(request):
     logout(request)
     return redirect('user-login')
+def profile(request):
+    return render(request,'user/profile.html')
+def settings(request):
+    return render(request,'user/settings.html')
