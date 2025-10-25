@@ -49,10 +49,10 @@
               <td>{{ item.Quantity}}</td>
               <td class="text-center">
                 <div class="btn-group" role="group">
-                  <a class="btn btn-info btn-sm" href="{% url 'dashboard-delete' %}" title="Edit">
+                  <a class="btn btn-info btn-sm" href="{% url 'dashboard-edit' item.id %}" title="Edit">
                     <i class="fas fa-edit"></i>
                   </a>
-                  <a class="btn btn-danger btn-sm" href="#" title="Delete">
+                  <a class="btn btn-danger btn-sm" href="{% url 'dashboard-delete' item.id %}" title="Delete">
                     <i class="fas fa-trash"></i>
                   </a>
                 </div>

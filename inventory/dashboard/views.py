@@ -64,7 +64,25 @@ def products(request):
     return render(request, 'dashboard/product.html',context)
 def product_delete(request,pk):
     item = product.objects.get(id=pk)
+    if request.method== 'POST':
+        item.delete()
+        return redirect('dashboard-product')
     return render(request, 'dashboard/Delete.html')
+def product_edit(request,pk):
+    item = product.objects.get(id=pk)
+    if request.method=='POST':
+        form = ProductForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard-product')
+
+    else:
+        form = ProductForm(instance=item)
+    context = {
+        'form': form,
+    }
+    return render(request, 'dashboard/Edit.html', context)
+
 
 @login_required(login_url='user-login')
 def order(request):
