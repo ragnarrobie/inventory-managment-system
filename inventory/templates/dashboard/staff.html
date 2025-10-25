@@ -17,7 +17,6 @@
       <hr />
       <form method="POST">
         {% csrf_token %}
-        <!-- Add your form fields here -->
         <div class="form-group">
           <label for="first_name">First Name</label>
           <input type="text" class="form-control" id="first_name" name="first_name" required>
@@ -44,31 +43,77 @@
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Position</th>
-          <th scope="col">Actions</th>
+          <th scope="col" style="width: 120px;">Actions</th>
         </tr>
       </thead>
       <tbody>
-        {% for staff_member in staff %}
+        <!-- Random Staff Member 1 -->
         <tr>
-          <td>{{ staff_member.first_name }}</td>
-          <td>{{ staff_member.last_name }}</td>
-          <td>{{ staff_member.position }}</td>
+          <td>John</td>
+          <td>Smith</td>
+          <td>Manager</td>
           <td>
-            <!-- Green Add Button (if you want to duplicate/add similar) -->
-            <a class="btn btn-success btn-sm mr-2" href="#" title="Add Similar">
-              <i class="fas fa-copy"></i>
-            </a>
-            <!-- Red Delete Button -->
-            <a class="btn btn-danger btn-sm ml-2" href="{% url 'dashboard-staff-delete' staff_member.id %}" title="Delete">
-              <i class="fas fa-trash"></i>
-            </a>
+            <div class="btn-group" role="group">
+              <a class="btn btn-info btn-sm" href="#" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a class="btn btn-danger btn-sm" href="#" title="Delete">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
           </td>
         </tr>
-        {% empty %}
+        
+        <!-- Random Staff Member 2 -->
         <tr>
-          <td colspan="4" class="text-center">No staff members found.</td>
+          <td>Sarah</td>
+          <td>Johnson</td>
+          <td>Developer</td>
+          <td>
+            <div class="btn-group" role="group">
+              <a class="btn btn-info btn-sm" href="#" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a class="btn btn-danger btn-sm" href="#" title="Delete">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
         </tr>
-        {% endfor %}
+        
+        <!-- Random Staff Member 3 -->
+        <tr>
+          <td>Michael</td>
+          <td>Brown</td>
+          <td>Designer</td>
+          <td>
+            <div class="btn-group" role="group">
+              <a class="btn btn-info btn-sm" href="#" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a class="btn btn-danger btn-sm" href="#" title="Delete">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+        
+        <!-- Random Staff Member 4 -->
+        <tr>
+          <td>Emily</td>
+          <td>Davis</td>
+          <td>Analyst</td>
+          <td>
+            <div class="btn-group" role="group">
+              <a class="btn btn-info btn-sm" href="#" title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a class="btn btn-danger btn-sm" href="#" title="Delete">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -83,6 +128,16 @@
 .btn-success:hover {
   background-color: #218838;
   border-color: #1e7e34;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+}
+
+.btn-info:hover {
+  background-color: #138496;
+  border-color: #117a8b;
 }
 
 .btn-danger {
@@ -101,6 +156,23 @@
 
 .card-body {
   padding: 20px;
+}
+
+.btn-group .btn {
+  margin: 0 2px;
+}
+
+.btn-group .btn:first-child {
+  margin-left: 0;
+}
+
+.btn-group .btn:last-child {
+  margin-right: 0;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
 }
 </style>
 {%endblock%}

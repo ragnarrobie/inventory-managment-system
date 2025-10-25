@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-
+from .models import product
 
 def superuser_required(view_func):
     """Restrict access to superusers; redirect staff or show denied."""
@@ -45,10 +45,14 @@ def staff(request):
 
 @login_required(login_url='user-login')
 def products(request):
+    items = product.objects.all()
+    context = {
+        'items' : items,
+    }
     user = request.user
     if not user.is_superuser:
         return render(request, 'dashboard/access_denied.html')
-    return render(request, 'dashboard/product.html')
+    return render(request, 'dashboard/product.html',context)
 
 
 @login_required(login_url='user-login')

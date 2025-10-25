@@ -56,30 +56,81 @@
               <th scope="col">Name</th>
               <th scope="col">Category</th>
               <th scope="col">Quantity</th>
-              <th scope="col" class="text-center">Activity</th>
+              <th scope="col" class="text-center" style="width: 120px;">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {% for product in product %}
+            <!-- Random Product 1 -->
             <tr>
-              <th scope="row">{{ forloop.counter }}</th>
-              <td>{{ product.name }}</td>
-              <td>{{ product.category }}</td>
-              <td>{{ product.quantity }}</td>
+              <th scope="row">1</th>
+              <td>iPhone 15 Pro</td>
+              <td>Electronics</td>
+              <td>25</td>
               <td class="text-center">
-                <a class="btn btn-warning btn-sm mr-1" href="{% url 'dashboard-products-edit' product.id %}" title="Edit">
-                  <i class="fas fa-edit"></i> Edit
-                </a>
-                <a class="btn btn-danger btn-sm ml-1" href="{% url 'dashboard-products-delete' product.id %}" title="Delete">
-                  <i class="fas fa-trash"></i> Delete
-                </a>
+                <div class="btn-group" role="group">
+                  <a class="btn btn-info btn-sm" href="#" title="Edit">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a class="btn btn-danger btn-sm" href="#" title="Delete">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
               </td>
             </tr>
-            {% empty %}
+            
+            <!-- Random Product 2 -->
             <tr>
-              <td colspan="5" class="text-center py-4">No products found.</td>
+              <th scope="row">2</th>
+              <td>Cotton T-Shirt</td>
+              <td>Clothing</td>
+              <td>150</td>
+              <td class="text-center">
+                <div class="btn-group" role="group">
+                  <a class="btn btn-info btn-sm" href="#" title="Edit">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a class="btn btn-danger btn-sm" href="#" title="Delete">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              </td>
             </tr>
-            {% endfor %}
+            
+            <!-- Random Product 3 -->
+            <tr>
+              <th scope="row">3</th>
+              <td>Chocolate Bar</td>
+              <td>Food</td>
+              <td>80</td>
+              <td class="text-center">
+                <div class="btn-group" role="group">
+                  <a class="btn btn-info btn-sm" href="#" title="Edit">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a class="btn btn-danger btn-sm" href="#" title="Delete">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            
+            <!-- Random Product 4 -->
+            <tr>
+              <th scope="row">4</th>
+              <td>Python Programming Book</td>
+              <td>Books</td>
+              <td>45</td>
+              <td class="text-center">
+                <div class="btn-group" role="group">
+                  <a class="btn btn-info btn-sm" href="#" title="Edit">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a class="btn btn-danger btn-sm" href="#" title="Delete">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -111,6 +162,26 @@
   border-color: #1e7e34;
 }
 
+.btn-info {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+}
+
+.btn-info:hover {
+  background-color: #138496;
+  border-color: #117a8b;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
 .table th {
   border-top: none;
   font-weight: 600;
@@ -133,6 +204,18 @@
 .btn-sm {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
+}
+
+.btn-group .btn {
+  margin: 0 2px;
+}
+
+.btn-group .btn:first-child {
+  margin-left: 0;
+}
+
+.btn-group .btn:last-child {
+  margin-right: 0;
 }
 </style>
 {%endblock%}
