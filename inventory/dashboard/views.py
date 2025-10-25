@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from .models import product
+from .forms import ProductForm
 
 def superuser_required(view_func):
     """Restrict access to superusers; redirect staff or show denied."""
@@ -46,14 +47,24 @@ def staff(request):
 @login_required(login_url='user-login')
 def products(request):
     items = product.objects.all()
+    if request.method =='POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard-product')
+    else:
+        form = ProductForm()
     context = {
         'items' : items,
+        'form' : form,
     }
     user = request.user
     if not user.is_superuser:
         return render(request, 'dashboard/access_denied.html')
     return render(request, 'dashboard/product.html',context)
-
+def product_delete(request,pk):
+    item = product.objects.get(id=pk)
+    return render(request, 'dashboard/Delete.html')
 
 @login_required(login_url='user-login')
 def order(request):

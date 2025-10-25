@@ -1,6 +1,6 @@
 {% extends 'partials/base.html' %}
 {%block title%}Product Page{%endblock%}
-
+{% load crispy_forms_tags %}
 {%block content%} 
 {% include 'partials/topside.html' %}
 
@@ -17,28 +17,9 @@
       <hr />
       <form method="POST">
         {% csrf_token %}
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>
-        </div>
-        <div class="form-group">
-          <label for="quantity">Quantity</label>
-          <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity" required>
-        </div>
-        <div class="form-group">
-          <label for="category">Category</label>
-          <select class="form-control" id="category" name="category" required>
-            <option value="" disabled selected>Choose...</option>
-            <option value="electronics">Electronics</option>
-            <option value="clothing">Clothing</option>
-            <option value="food">Food</option>
-            <option value="books">Books</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <button class="btn btn-success btn-block" type="submit">
-          Add Product
-        </button>
+          {{ form|crispy }}
+        <input class="btn btn-success btn-block" type="submit" value="Add Product">
+        
       </form>
     </div>
   </div>
@@ -60,15 +41,15 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Random Product 1 -->
+            {% for item in items %}
             <tr>
-              <th scope="row">1</th>
-              <td>iPhone 15 Pro</td>
-              <td>Electronics</td>
-              <td>25</td>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ item.name }}</td>
+              <td>{{ item.category}}</td>
+              <td>{{ item.Quantity}}</td>
               <td class="text-center">
                 <div class="btn-group" role="group">
-                  <a class="btn btn-info btn-sm" href="#" title="Edit">
+                  <a class="btn btn-info btn-sm" href="{% url 'dashboard-delete' %}" title="Edit">
                     <i class="fas fa-edit"></i>
                   </a>
                   <a class="btn btn-danger btn-sm" href="#" title="Delete">
@@ -77,60 +58,7 @@
                 </div>
               </td>
             </tr>
-            
-            <!-- Random Product 2 -->
-            <tr>
-              <th scope="row">2</th>
-              <td>Cotton T-Shirt</td>
-              <td>Clothing</td>
-              <td>150</td>
-              <td class="text-center">
-                <div class="btn-group" role="group">
-                  <a class="btn btn-info btn-sm" href="#" title="Edit">
-                    <i class="fas fa-edit"></i>
-                  </a>
-                  <a class="btn btn-danger btn-sm" href="#" title="Delete">
-                    <i class="fas fa-trash"></i>
-                  </a>
-                </div>
-              </td>
-            </tr>
-            
-            <!-- Random Product 3 -->
-            <tr>
-              <th scope="row">3</th>
-              <td>Chocolate Bar</td>
-              <td>Food</td>
-              <td>80</td>
-              <td class="text-center">
-                <div class="btn-group" role="group">
-                  <a class="btn btn-info btn-sm" href="#" title="Edit">
-                    <i class="fas fa-edit"></i>
-                  </a>
-                  <a class="btn btn-danger btn-sm" href="#" title="Delete">
-                    <i class="fas fa-trash"></i>
-                  </a>
-                </div>
-              </td>
-            </tr>
-            
-            <!-- Random Product 4 -->
-            <tr>
-              <th scope="row">4</th>
-              <td>Python Programming Book</td>
-              <td>Books</td>
-              <td>45</td>
-              <td class="text-center">
-                <div class="btn-group" role="group">
-                  <a class="btn btn-info btn-sm" href="#" title="Edit">
-                    <i class="fas fa-edit"></i>
-                  </a>
-                  <a class="btn btn-danger btn-sm" href="#" title="Delete">
-                    <i class="fas fa-trash"></i>
-                  </a>
-                </div>
-              </td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
