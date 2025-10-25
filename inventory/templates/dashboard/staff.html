@@ -11,35 +11,13 @@
       <div class="alert alert-{{ message.tags }}">{{ message }}</div>
       {% endfor %} 
     {% endif %}
-    
-    <div class="card card-body">
-      <h5>Add New Staff Member</h5>
-      <hr />
-      <form method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="first_name">Name</label>
-          <input type="text" class="form-control" id="first_name" name="first_name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="position">Position</label>
-          <input type="text" class="form-control" id="position" name="position" required>
-        </div>
-        <button class="btn btn-success btn-block" type="submit">
-          <i class="fas fa-plus"></i> Add Staff
-        </button>
-      </form>
-    </div>
   </div>
   
   <div class="col-md-8">
     <table class="table bg-white">
       <thead class="bg-info text-white">
         <tr>
+          <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
           <th scope="col">Phone Number</th>
@@ -47,73 +25,31 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Random Staff Member 1 -->
+        {% for worker in workers %}
         <tr>
-          <td>John</td>
-          <td>Smith</td>
-          <td>Manager</td>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ worker.get_full_name|default:worker.username }}</td>
+          <td>{{ worker.email|default:"No email" }}</td>
+          <td>
+            {% if worker.profile.phone %}
+              {{ worker.profile.phone }}
+            {% else %}
+              No phone
+            {% endif %}
+          </td>
           <td>
             <div class="btn-group" role="group">
-              <a class="btn btn-info btn-sm" href="#" title="Edit">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a class="btn btn-danger btn-sm" href="#" title="Delete">
-                <i class="fas fa-trash"></i>
-              </a>
+              <a class="btn btn-info btn-sm" href="{% url 'dashboard-staff-detail' worker.id %}" title="View">
+                <i class="fas fa-eye"></i> View
+              </a>                              
             </div>
           </td>
         </tr>
-        
-        <!-- Random Staff Member 2 -->
+        {% empty %}
         <tr>
-          <td>Sarah</td>
-          <td>Johnson</td>
-          <td>Developer</td>
-          <td>
-            <div class="btn-group" role="group">
-              <a class="btn btn-info btn-sm" href="#" title="Edit">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a class="btn btn-danger btn-sm" href="#" title="Delete">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </td>
+          <td colspan="5" class="text-center">No staff members found.</td>
         </tr>
-        
-        <!-- Random Staff Member 3 -->
-        <tr>
-          <td>Michael</td>
-          <td>Brown</td>
-          <td>Designer</td>
-          <td>
-            <div class="btn-group" role="group">
-              <a class="btn btn-info btn-sm" href="#" title="Edit">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a class="btn btn-danger btn-sm" href="#" title="Delete">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </td>
-        </tr>
-        
-        <!-- Random Staff Member 4 -->
-        <tr>
-          <td>Emily</td>
-          <td>Davis</td>
-          <td>Analyst</td>
-          <td>
-            <div class="btn-group" role="group">
-              <a class="btn btn-info btn-sm" href="#" title="Edit">
-                <i class="fas fa-edit"></i>
-              </a>
-              <a class="btn btn-danger btn-sm" href="#" title="Delete">
-                <i class="fas fa-trash"></i>
-              </a>
-            </div>
-          </td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
@@ -175,4 +111,4 @@
   font-size: 0.875rem;
 }
 </style>
-{%endblock%}
+{% endblock %}

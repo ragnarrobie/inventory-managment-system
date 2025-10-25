@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from .models import product
 from .forms import ProductForm
+from django.contrib.auth.models import User
 
 def superuser_required(view_func):
     """Restrict access to superusers; redirect staff or show denied."""
@@ -37,12 +38,23 @@ def staff_admin(request):
 
 @login_required(login_url='user-login')
 def staff(request):
-    """Legacy staff page (if you still need it)."""
+    workers = User.objects.all()
+    context = {
+        'workers':workers
+    }
     user = request.user
     if not (user.is_staff or user.is_superuser):
         return render(request, 'dashboard/access_denied.html')
-    return render(request, 'dashboard/staff.html')
+    return render(request, 'dashboard/staff.html',context)
+@login_required(login_url='user-login')
+def staff_detail(request,pk):
+    workers = User.objects.get(id=pk)
+    context = {
+        'worker' : workers,
+    }
 
+    
+    return render(request,'dashboard/staff-detail.html',context)
 
 @login_required(login_url='user-login')
 def products(request):
@@ -62,12 +74,14 @@ def products(request):
     if not user.is_superuser:
         return render(request, 'dashboard/access_denied.html')
     return render(request, 'dashboard/product.html',context)
+@login_required(login_url='user-login')
 def product_delete(request,pk):
     item = product.objects.get(id=pk)
     if request.method== 'POST':
         item.delete()
         return redirect('dashboard-product')
     return render(request, 'dashboard/Delete.html')
+@login_required(login_url='user-login')
 def product_edit(request,pk):
     item = product.objects.get(id=pk)
     if request.method=='POST':
