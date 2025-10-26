@@ -21,8 +21,15 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/',include('dashboard.urls')),
     path('', include('user.urls')),
+    path('password_reset/',auth_views.PasswordResetView.as_view(),
+         name='password_reset'),
+    path('password_reset_done/',auth_views.PasswordResetDoneView.as_view(),
+         name='password_reset_done'),
+    path('password_reset_confirm/',auth_views.PasswordResetConfirmView.as_view(),
+         name='password_reset_confirm')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
