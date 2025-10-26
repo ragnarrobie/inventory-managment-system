@@ -6,6 +6,7 @@ from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm  # Fixed ty
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
+
 def register(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)

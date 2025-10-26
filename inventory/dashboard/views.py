@@ -4,6 +4,7 @@ from django.http import HttpResponseForbidden
 from .models import product,Order
 from .forms import ProductForm,OrderForm
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 def superuser_required(view_func):
     """Restrict access to superusers; redirect staff or show denied."""
@@ -69,8 +70,17 @@ def staff_admin(request):
 @login_required(login_url='user-login')
 def staff(request):
     workers = User.objects.all()
+    workers_count = workers.count()
+    orders = Order.objects.all()
+    orders_count = orders.count()
+    items = product.objects.all()
+    product_count = items.count()
+    
     context = {
-        'workers':workers
+        'workers':workers,
+        'workers_count':workers_count,
+        'orders_count': orders_count,
+        'product_count': product_count,
     }
     user = request.user
     if not (user.is_staff or user.is_superuser):
@@ -88,16 +98,28 @@ def staff_detail(request,pk):
 @login_required(login_url='user-login')
 def products(request):
     items = product.objects.all()
+    product_count = items.count()
+    workers_count = User.objects.all().count()
+    orders = Order.objects.all()
+    orders_count = orders.count()
+    
+    
     if request.method =='POST':
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
+            product_name = form.cleaned_data.get('name')
+            messages.success(request, f'{product_name} has been added')
+
             return redirect('dashboard-product')
     else:
         form = ProductForm()
     context = {
         'items' : items,
         'form' : form,
+        'workers_count': workers_count,
+        'orders_count': orders_count,
+        'product_count': product_count,
     }
     user = request.user
     if not user.is_superuser:
@@ -132,8 +154,15 @@ def product_edit(request,pk):
 @login_required(login_url='user-login')
 def order(request):
     orders = Order.objects.all()
+    workers_count = User.objects.all().count()
+    orders_count = orders.count()
+    items = product.objects.all()
+    product_count = items.count()
     context = {
         'orders': orders,
+        'workers_count': workers_count,
+        'orders_count': orders_count,
+        'product_count': product_count,
     }
     user = request.user
     if not user.is_superuser:
