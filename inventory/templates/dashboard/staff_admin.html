@@ -1,64 +1,52 @@
 {% extends 'partials/base.html' %}
-{% load static %}
-
+{%block title%}Orders Page{%endblock%}
+{% load crispy_forms_tags %}
 {% block content %}
-<div class="container-fluid mt-5">
-  <div class="row justify-content-center">
-
-    <!-- Left card: Make Request -->
-    <div class="col-md-3 mb-4">
-      <div class="card shadow-sm border-0">
-        <div class="card-header bg-white text-center fw-bold">
-          Make Request
+<div>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Make Request
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <input class="btn btn-info btn-block" type="submit" value="Make Request">
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="card-body text-center">
-          <a href="#" class="btn btn-info w-75">Make Request</a>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    Orders Records
+                </div>
+                <div class="card-body">
+                    <table class="table bg-white">
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            {% if order.staff == user %}
+                            <tr>
+                                <td>{{ order.product.name }}</td>
+                                <td>{{ order.product.category }}</td>
+                                <td>{{ order.order_quantity }}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-
-    <!-- Right card: Orders Records -->
-    <div class="col-md-6 mb-4">
-      <div class="card shadow-sm border-0">
-        <div class="card-header bg-info text-white fw-bold">
-          Orders Records
-        </div>
-        <div class="card-body">
-          <table class="table table-bordered text-center mb-0">
-            <thead class="table-light">
-              <tr>
-                <th>Product</th>
-                <th>Category</th>
-                <th>Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Book</td>
-                <td>Stationary</td>
-                <td>10</td>
-              </tr>
-              <tr>
-                <td>Book</td>
-                <td>Stationary</td>
-                <td>10</td>
-              </tr>
-              <tr>
-                <td>Book</td>
-                <td>Stationary</td>
-                <td>10</td>
-              </tr>
-              <tr>
-                <td>Book</td>
-                <td>Stationary</td>
-                <td>10</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-  </div>
 </div>
-{% endblock %}
+{%endblock%}
