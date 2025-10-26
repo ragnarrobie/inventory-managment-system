@@ -12,7 +12,6 @@
     </div>
 </div>
 <div class="row mt-4">
-    <!-- Chart 1: 0.02 / 13:43 (Line Chart) -->
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
@@ -23,8 +22,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Chart 2: 1.0, 0.9, 0.8... (Bar Chart) -->
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
@@ -38,7 +35,6 @@
 </div>
 
 <div class="row mt-4">
-    <!-- Chart 3: 2.0, 18, 16... (Line Chart) -->
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
@@ -49,8 +45,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Chart 4: Products (Pie Chart) -->
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
@@ -64,7 +58,6 @@
 </div>
 
 {% elif user.is_authenticated %}
-<!-- Show this message for non-superusers -->
 <div class="row mt-4">
     <div class="col-md-12">
         <div class="alert alert-warning text-center">
@@ -80,9 +73,7 @@
 {% block extra_scripts %}
 {% if user.is_authenticated and user.is_superuser %}
 <script>
-// Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Chart 1: Performance Metrics (0.02 / 13:43)
     const performanceCtx = document.getElementById('performanceChart');
     if (performanceCtx) {
         new Chart(performanceCtx.getContext('2d'), {
@@ -112,8 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Chart 2: Quality Scores (1.0, 0.9, 0.8...)
     const qualityCtx = document.getElementById('qualityChart');
     if (qualityCtx) {
         new Chart(qualityCtx.getContext('2d'), {
@@ -139,8 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Chart 3: Inventory Levels (2.0, 18, 16...)
     const inventoryCtx = document.getElementById('inventoryChart');
     if (inventoryCtx) {
         new Chart(inventoryCtx.getContext('2d'), {
@@ -167,8 +154,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Chart 4: Product Distribution
     const productCtx = document.getElementById('productChart');
     if (productCtx) {
         new Chart(productCtx.getContext('2d'), {

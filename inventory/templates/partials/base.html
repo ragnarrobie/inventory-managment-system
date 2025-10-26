@@ -2,36 +2,25 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
-    <!-- CSRF Token for AJAX requests -->
     <meta name="csrf-token" content="{{ csrf_token }}">
-
-    <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
       integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
       crossorigin="anonymous"
     />
-
-    <!--FontAwesome CDN-->
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
       integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
       crossorigin="anonymous"
     />
-    
-    <!--Chart.js CDN-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!--Custom CSS-->
     <link rel="stylesheet" href="{% static '/style.css' %}" />
     <title>{% block title %}{% endblock %}</title>
   </head>
@@ -41,7 +30,7 @@
 
     <div class="container">{% block content %} {% endblock %}</div>
 
-    <!-- Hidden CSRF token for JavaScript access -->
+    
     <input type="hidden" id="csrfToken" value="{{ csrf_token }}">
 
     <script
@@ -54,10 +43,7 @@
       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
       crossorigin="anonymous"
     ></script>
-
-    <!-- CSRF Token Utility Script -->
     <script>
-      // Function to get CSRF token from cookie
       function getCookie(name) {
           let cookieValue = null;
           if (document.cookie && document.cookie !== '') {
@@ -72,8 +58,6 @@
           }
           return cookieValue;
       }
-
-      // Get CSRF token from hidden input or cookie
       function getCSRFToken() {
           const hiddenToken = document.getElementById('csrfToken');
           if (hiddenToken && hiddenToken.value) {
@@ -81,11 +65,7 @@
           }
           return getCookie('csrftoken');
       }
-
-      // Set up AJAX to include CSRF token by default
       const csrftoken = getCSRFToken();
-
-      // For jQuery AJAX requests
       $.ajaxSetup({
           beforeSend: function(xhr, settings) {
               if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
@@ -93,13 +73,9 @@
               }
           }
       });
-
-      // For fetch API
       const originalFetch = window.fetch;
       window.fetch = function(...args) {
           const [url, options = {}] = args;
-          
-          // Only add CSRF token for same-origin POST, PUT, PATCH, DELETE requests
           if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(options.method || 'GET') && 
               !options.credentials || options.credentials === 'same-origin') {
               
@@ -112,8 +88,6 @@
           return originalFetch(url, options);
       };
     </script>
-
-    <!-- Additional custom scripts block -->
     {% block extra_scripts %}{% endblock %}
     
   </body>

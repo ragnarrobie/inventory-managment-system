@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.db import IntegrityError
-from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm  # Fixed typo
+from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm  
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
@@ -36,7 +36,7 @@ def profile(request):
 def settings(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
-        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)  # Fixed typo and added request.FILES
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile) 
         
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
@@ -47,7 +47,7 @@ def settings(request):
             messages.error(request, 'Please correct the errors below.')
     else:
         user_form = UserUpdateForm(instance=request.user)
-        profile_form = ProfileUpdateForm(instance=request.user.profile)  # Fixed typo and removed request.POST, request.FILES
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
     
     context = {
         'user_form': user_form,

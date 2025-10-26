@@ -13,9 +13,9 @@ class CreateUserForm(UserCreationForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name']  # Added first_name and last_name
+        fields = ['username', 'email', 'first_name', 'last_name'] 
 
-class ProfileUpdateForm(forms.ModelForm):  # Fixed typo: ProfileUpfateForm to ProfileUpdateForm
+class ProfileUpdateForm(forms.ModelForm):  
     class Meta:
         model = Profile
         fields = ['address', 'phone', 'image']

@@ -12,7 +12,6 @@ def superuser_required(view_func):
         user = request.user
         if not user.is_superuser:
             if user.is_staff:
-                # Redirect staff users to staff_admin page
                 return redirect('dashboard-staff-admin')
             if user.is_active:
                 return render(request, 'dashboard/access_denied.html')

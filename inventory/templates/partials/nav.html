@@ -17,7 +17,6 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Dashboard link - only show when logged in -->
       {% if user.is_authenticated %}
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -30,7 +29,6 @@
 
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
-          <!-- Show when user IS logged in -->
           <li class="nav-item active">
             <a class="nav-link text-white" href="{% url 'user-profile' %}">
               Hello, {{ user.username }}<span class="sr-only">(current)</span>
@@ -43,7 +41,6 @@
             </a>
           </li>
         {% else %}
-          <!-- Show when user is NOT logged in -->
           <li class="nav-item active">
             <a class="nav-link text-white" href="{% url 'user-login' %}">
               Login <span class="sr-only">(current)</span>
